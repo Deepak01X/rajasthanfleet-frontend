@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { ToastProvider } from "@/components/ui/use-toast";
 
 export const metadata: Metadata = {
-  title: "Welcome Rajasthan - Premium Taxi Services",
+  title: "Rajasthan Fleet - Premium Cab Service",
   description:
     "Your adventure across Rajasthan starts with a click. Professional taxi booking services for tourism in the land of kings.",
   generator: "v0.app",
