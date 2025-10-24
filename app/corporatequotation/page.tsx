@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PopupModal from "@/components/PopupModal";
@@ -31,7 +31,7 @@ export default function CorporateQuotationPage() {
 
     try {
       // ✅ Backend API endpoint (change this if needed)
-      const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/corporatequotations", {
+      const res = await fetch(`${API_BASE_URL}/api/corporatequotations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

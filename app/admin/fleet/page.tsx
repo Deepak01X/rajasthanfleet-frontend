@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ export default function FleetAdminPage() {
   // 🔹 Fetch existing fleets
   useEffect(() => {
     axios
-      .get("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/fleet")
+      .get(`${API_BASE_URL}/api/fleet`)
       .then((res) => setFleets(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -43,7 +44,7 @@ export default function FleetAdminPage() {
     };
 
     try {
-      await axios.post("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/fleet", updatedData, {
+      await axios.post(`${API_BASE_URL}/api/fleet`, updatedData, {
         headers: { "Content-Type": "application/json" },
       });
       alert("Fleet added ✅");
@@ -58,7 +59,7 @@ export default function FleetAdminPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this fleet?")) return;
     try {
-      await axios.delete(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/fleet/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/fleet/${id}`);
       setFleets(fleets.filter((f) => f.id !== id));
     } catch (err) {
       console.error(err);

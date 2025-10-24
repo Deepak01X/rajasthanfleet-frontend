@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -23,7 +23,7 @@ export default function PaymentPage() {
       alert("✅ Payment of ₹" + amount + " successful!");
       
       // Optionally update payment status in backend
-      await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings/${bookingId}/updatePayment`, {
+      await fetch(`${API_BASE_URL}/api/bookings/${bookingId}/updatePayment`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ paymentStatus: "Paid" }),

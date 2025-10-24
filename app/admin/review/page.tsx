@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminHeader";
 import Footer from "@/components/Footer";
@@ -18,7 +19,7 @@ export default function ReviewsPage() {
 
   // 🔹 Fetch reviews
   useEffect(() => {
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/reviews")
+    fetch(`${API_BASE_URL}/api/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data))
       .catch(() => {});
@@ -39,11 +40,11 @@ export default function ReviewsPage() {
       formData.append("image", newReview.image);
     }
 
-    let url = "https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/reviews";
+    let url = `${API_BASE_URL}/api/reviews`;
     let method = "POST";
 
     if (isEditing && newReview.id) {
-      url = `https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/reviews/${newReview.id}`;
+      url = `${API_BASE_URL}/api/reviews/${newReview.id}`;
       method = "PUT";
     }
 
@@ -64,7 +65,7 @@ export default function ReviewsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Delete this review?")) return;
 
-    const res = await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/reviews/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/reviews/${id}`, {
       method: "DELETE",
     });
 
@@ -169,7 +170,7 @@ export default function ReviewsPage() {
                 <div className="flex items-center mb-5 gap-4">
                   {rev.image ? (
                     <img
-                      src={`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com${rev.image}`}
+                      src={`${API_BASE_URL}${rev.image}`}
                       alt={rev.name}
                       className="w-14 h-14 rounded-full object-cover border border-pink-500 shadow-sm"
                     />

@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import Header from "@/components/AdminHeader";
 import Footer from "@/components/Footer";
@@ -14,7 +14,7 @@ export default function AdminCorporateQuotations() {
   // ✅ Fetch quotations from backend
   const fetchQuotations = async () => {
     try {
-      const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/corporatequotations");
+      const res = await fetch(`${API_BASE_URL}/api/corporatequotations`);
       if (!res.ok) throw new Error("Failed to fetch quotations");
       const data = await res.json();
       setQuotations(data);
@@ -35,7 +35,7 @@ export default function AdminCorporateQuotations() {
     if (!confirm("Are you sure you want to delete this quotation?")) return;
 
     try {
-      const res = await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/corporatequotations/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/corporatequotations/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {

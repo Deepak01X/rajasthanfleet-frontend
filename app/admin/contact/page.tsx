@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminHeader"; // ✅ Correct import
 import Footer from "@/components/Footer";
@@ -12,7 +13,7 @@ export default function ContactMessages() {
 
   // 🔹 Fetch messages
   useEffect(() => {
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/contact")
+    fetch(`${API_BASE_URL}/api/contact`)
       .then((res) => res.json())
       .then((data) => {
         setMessages(data);
@@ -28,7 +29,7 @@ export default function ContactMessages() {
   const handleDelete = (id: number) => {
     if (!confirm("Are you sure you want to delete this message?")) return;
 
-    fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/contact/${id}`, {
+    fetch(`${API_BASE_URL}/api/contact/${id}`, {
       method: "DELETE",
     })
       .then((res) => {

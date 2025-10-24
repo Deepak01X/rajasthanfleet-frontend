@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const res = await axios.post("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/auth/login", {
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
         username,
         password,
       });

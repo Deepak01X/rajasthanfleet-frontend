@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminHeader";
 import Footer from "@/components/Footer";
@@ -32,7 +32,7 @@ export default function AdminTravelTips() {
   });
 
   useEffect(() => {
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/tips")
+    fetch(`${API_BASE_URL}/api/tips`)
       .then((res) => res.json())
       .then((data) => {
         setTips(data);
@@ -79,8 +79,8 @@ export default function AdminTravelTips() {
 
     const method = formData.id ? "PUT" : "POST";
     const url = formData.id
-      ? `https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/tips/${formData.id}`
-      : "https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/tips";
+      ? `${API_BASE_URL}/api/tips/${formData.id}`
+      : `${API_BASE_URL}/api/tips`;
 
     const fd = new FormData();
     const tipObject = {
@@ -150,7 +150,7 @@ export default function AdminTravelTips() {
 
   const handleDelete = (id: number) => {
     if (!confirm("Are you sure you want to delete this tip?")) return;
-    fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/tips/${id}`, { method: "DELETE" })
+    fetch(`${API_BASE_URL}/api/tips/${id}`, { method: "DELETE" })
       .then((res) => {
         if (res.ok) setTips((prev) => prev.filter((t) => t.id !== id));
       })

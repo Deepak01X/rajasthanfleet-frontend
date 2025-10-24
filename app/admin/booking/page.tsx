@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminHeader";
 import Footer from "@/components/Footer";
@@ -20,7 +20,7 @@ export default function AdminBookings() {
 
   // ✅ Fetch Bookings
   useEffect(() => {
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings")
+    fetch(`${API_BASE_URL}/api/bookings`)
       .then((res) => res.json())
       .then((data) => {
         setBookings(data);
@@ -35,7 +35,7 @@ export default function AdminBookings() {
   // ✅ Toggle Payment Status
   const handlePaymentToggle = async (id: number, currentStatus: string) => {
     const newStatus = currentStatus === "Paid" ? "Unpaid" : "Paid";
-    await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings/${id}/status`, {
+    await fetch(`${API_BASE_URL}/api/bookings/${id}/status`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newStatus),
@@ -50,7 +50,7 @@ export default function AdminBookings() {
   // ✅ Delete Booking
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this booking?")) return;
-    await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings/${id}`, { method: "DELETE" });
+    await fetch(`${API_BASE_URL}/api/bookings/${id}`, { method: "DELETE" });
     setBookings((prev) => prev.filter((b) => b.id !== id));
   };
 
@@ -60,7 +60,7 @@ const handleAssignDriver = async () => {
   if (!selected) return;
 
   const res = await fetch(
-    `https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings/${selected.id}/assign-driver`,
+    `${API_BASE_URL}/api/bookings/${selected.id}/assign-driver`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

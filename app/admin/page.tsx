@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 
     if (token) {
       axios
-        .get("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/auth/verify", {
+        .get(`${API_BASE_URL}/auth/verify`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

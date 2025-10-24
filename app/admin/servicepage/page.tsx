@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import AdminHeader from "@/components/AdminHeader";
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -19,7 +19,7 @@ export default function AdminServicesPage() {
   // ✅ Fetch all services from DB
   const fetchServices = async () => {
     try {
-      const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services");
+      const res = await fetch(`${API_BASE_URL}/api/services`);
       const data = await res.json();
       setServiceList(data);
     } catch (err) {
@@ -71,14 +71,14 @@ export default function AdminServicesPage() {
 
         if (editingId) {
           // ✅ PUT request with path variable
-          await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services/${editingId}`, {
+          await fetch(`${API_BASE_URL}/api/services/${editingId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
         } else {
           // ✅ POST request for new service
-          await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services", {
+          await fetch(`${API_BASE_URL}/api/services`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -104,7 +104,7 @@ export default function AdminServicesPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this service?")) return;
     try {
-      await fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services/${id}`, { method: "DELETE" });
+      await fetch(`${API_BASE_URL}/api/services/${id}`, { method: "DELETE" });
       fetchServices();
       alert("🗑️ Deleted successfully!");
     } catch (err) {

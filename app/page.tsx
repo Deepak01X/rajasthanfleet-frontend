@@ -1,4 +1,5 @@
 "use client"
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useRouter } from "next/navigation";  // 🔹 Add this line
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
@@ -36,22 +37,22 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
     const router = useRouter(); // 🔹 Add this line just below useState hooks
 
   useEffect(() => {
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/fleet")
+    fetch(`${API_BASE_URL}/api/fleet`)
       .then((res) => res.json())
       .then((data) => setFleet(data))
       .catch(() => {});
 
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/reviews")
+    fetch(`${API_BASE_URL}/api/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data))
       .catch(() => {});
 
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/faqs")
+    fetch(`${API_BASE_URL}/api/faqs`)
       .then((res) => res.json())
       .then((data) => setFaqs(data))
       .catch(() => {});
 
-    fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/tips")
+    fetch(`${API_BASE_URL}/api/tips`)
       .then((res) => res.json())
       .then((data) => setTips(data))
       .catch(() => {});
@@ -356,7 +357,7 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
                         phone: e.target.phone.value,
                       };
 
-                      fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/quotations", {
+                      fetch(`${API_BASE_URL}/api/quotations`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(formData),
@@ -701,7 +702,7 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
                 {previewOpen === tip.id && tip.imageUrl && (
                   <div className="mt-4 rounded-lg overflow-hidden animate-fade-in-up">
                     <img
-  src={`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com${tip.imageUrl}`}
+  src={`${API_BASE_URL}${tip.imageUrl}`}
   alt={tip.title}
   className="w-full h-32 object-cover rounded-md"
 />
@@ -834,7 +835,7 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
           <div className="flex items-center mb-4 gap-4">
             {rev.image ? (
               <img
-                src={`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com${rev.image}`}
+                src={`${API_BASE_URL}${rev.image}`}
                 alt={rev.name}
                 className="w-14 h-14 rounded-full object-cover border border-white/30"
               />
@@ -898,7 +899,7 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
               };
 
               try {
-                const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/contact", {
+                const res = await fetch(`${API_BASE_URL}/api/contact`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(formData),

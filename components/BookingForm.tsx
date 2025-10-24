@@ -1,5 +1,5 @@
 "use client";
-
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -46,7 +46,7 @@ export default function BookingForm() {
   // ✅ Fetch services dynamically from backend for selected car
   useEffect(() => {
     if (carFromUrl) {
-      fetch(`https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services/byCar/${carFromUrl}`)
+      fetch(`${API_BASE_URL}/api/services/byCar/${carFromUrl}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
@@ -81,7 +81,7 @@ export default function BookingForm() {
     };
 
     try {
-      const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/bookings", {
+      const res = await fetch(`${API_BASE_URL}/api/bookings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingData),

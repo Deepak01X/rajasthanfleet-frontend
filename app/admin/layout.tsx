@@ -1,4 +1,5 @@
 "use client";
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
@@ -35,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       }
 
       try {
-        const res = await axios.get("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/auth/verify", {
+        const res = await axios.get(`${API_BASE_URL}/auth/verify`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

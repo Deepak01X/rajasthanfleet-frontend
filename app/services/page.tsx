@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ServiceSection from "@/components/ServiceSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { API_BASE_URL } from "@/lib/apiConfig";
 
 export default function ServicesPage() {
   const [services, setServices] = useState<any[]>([]);
@@ -13,7 +14,7 @@ export default function ServicesPage() {
     const fetchServices = async () => {
       try {
         // ✅ Fetch data from Spring Boot backend
-        const res = await fetch("https://rajasthanfleet.ap-south-1.elasticbeanstalk.com/api/services", {
+         const res = await fetch(`${API_BASE_URL}/api/services`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
