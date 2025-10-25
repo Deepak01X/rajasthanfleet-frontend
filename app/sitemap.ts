@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+export const revalidate = 60;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://rajasthanfleet.com';
