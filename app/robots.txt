@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rajasthanfleet.com/sitemap.xml
