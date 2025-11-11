@@ -164,3 +164,116 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+/* 🌐 Global Fix for Responsive Layout & Smooth Scrolling */
+
+/* Fix for mobile horizontal scroll, overflow & smooth scrolling */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
+}
+
+/* Prevent image or video from stretching or overflowing */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Center all container sections safely */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /*width: 100%;*/
+  box-sizing: border-box;
+}
+
+/* Fix long words & text cut issue in mobile */
+@media (max-width: 640px) {
+  section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 1 !important;
+    padding-bottom: 1 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  section + section {
+    margin-top: 1rem !important;
+  }
+}
+@supports (-webkit-touch-callout: none) {
+  section {
+    min-height: -webkit-fill-available;
+  }
+}
+/* ✅ Fallback for browsers that don't support dvh yet */
+:root {
+  --hero-height: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --hero-height: 100dvh;
+  }
+}
+
+#home {
+  min-height: var(--hero-height);
+}
+/* Mobile crop adjustment for hero background */
+@media (max-width: 640px) {
+  .bg-mobile-crop {
+    background-size: 162% auto !important; /* Mobile: thoda left/right crop */
+    background-position: center center !important;
+  }
+}
+@media (min-width: 1024px) { /* lg (laptop/desktop) breakpoint */
+  .bg-mobile-crop {
+    background-position: center 28%!important;  /* ya jitni % niche chahiye */
+    background-size: 100% auto !important;       /* thoda aur zoom chahe toh value badhao */
+  }
+}
+/* ✅ Make video adaptive to all screen heights (no gap anywhere) */
+section.video-section {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 🧱 Mobile/tablet height fix using dynamic viewport height */
+section.video-section {
+  height: 95vh; /* ensures correct visible height across iPhone, Android, etc. */
+}
+
+/* 🎥 Video responsiveness */
+section.video-section video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+/* ✅ Remove unwanted empty gaps between sections (mobile + all screens) */
+@media (max-width: 1024px) {
+  section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* For better readability, keep little breathing space on small screens */
+  section + section {
+    margin-top: 1rem !important;  /* 16px gap between sections only */
+  }
+}
+
+/* 🔹 Extra protection: remove hidden blank area from Swiper or images */
+.swiper,
+.swiper-slide {
+  min-height: auto !important;
+  height: auto !important;
+}

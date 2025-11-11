@@ -20,10 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
-      >
+    <html lang="en">
+      <head>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+      </head>
+     <body
+  className={`dark font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased overflow-x-hidden w-screen max-w-[100vw]`}
+  style={{ margin: 0, padding: 0 }}
+>
+
         <ToastProvider>
           <Suspense>
             {children}
@@ -34,3 +39,4 @@ export default function RootLayout({
     </html>
   );
 }
+

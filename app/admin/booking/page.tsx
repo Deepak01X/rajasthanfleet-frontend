@@ -19,18 +19,36 @@ export default function AdminBookings() {
   const [driverData, setDriverData] = useState({ name: "", phone: "" });
 
   // ✅ Fetch Bookings
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/bookings`)
-      .then((res) => res.json())
-      .then((data) => {
+useEffect(() => {
+  const fetchBookings = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/bookings`);
+
+      if (!res.ok) {
+        console.error("API failed:", res.status, res.statusText);
+        setBookings([]); // ✅ prevent crash
+        setLoading(false);
+        return;
+      }
+
+      const data = await res.json();
+      if (Array.isArray(data)) {
         setBookings(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching bookings:", err);
-        setLoading(false);
-      });
-  }, []);
+      } else {
+        console.error("Unexpected data:", data);
+        setBookings([]); // fallback if not array
+      }
+    } catch (err) {
+      console.error("Error fetching bookings:", err);
+      setBookings([]); // prevent crash
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchBookings();
+}, []);
+
 
   // ✅ Toggle Payment Status
   const handlePaymentToggle = async (id: number, currentStatus: string) => {
@@ -158,42 +176,44 @@ Thank you for choosing 🌸 *Rajasthan Fleet!* 🌸`;
           <p className="text-gray-400">Loading bookings...</p>
         ) : (
           <div className="w-full max-w-6xl space-y-6">
-            {bookings.map((b) => (
-              <Card key={b.id} className="bg-[#2a1a1a] border border-gray-700">
-                <CardContent className="p-6 flex flex-col md:flex-row justify-between gap-4">
-                  <div className="flex-1">
-                    <h2 className="text-xl font-semibold text-white">
-                      {b.name} —{" "}
-                      <span className="text-pink-400">{b.bookingType}</span>
-                    </h2>
-                    <p className="text-gray-300 text-sm">📞 {b.phone} | ✉️ {b.email}</p>
-                    <p className="text-gray-400 text-sm">🚘 {b.cabType} — {b.carName}</p>
-                    <p className="text-gray-400 text-sm">📍 {b.pickup} → {b.drop}</p>
-                    <p className="text-gray-500 text-sm">📅 {formatDate(b.date)} | 🕒 {b.time}</p>
-                  </div>
+            {Array.isArray(bookings) && bookings.length > 0 ? (
+  bookings.map((b) => (
+    <Card key={b.id} className="bg-[#2a1a1a] border border-gray-700">
+      <CardContent className="p-6 flex flex-col md:flex-row justify-between gap-4">
+        <div className="flex-1">
+          <h2 className="text-xl font-semibold text-white">
+            {b.name} —{" "}
+            <span className="text-pink-400">{b.bookingType}</span>
+          </h2>
+          <p className="text-gray-300 text-sm">📞 {b.phone} | ✉️ {b.email}</p>
+          <p className="text-gray-400 text-sm">🚘 {b.cabType} — {b.carName}</p>
+          <p className="text-gray-400 text-sm">📍 {b.pickup} → {b.drop}</p>
+          <p className="text-gray-500 text-sm">📅 {formatDate(b.date)} | 🕒 {b.time}</p>
+        </div>
 
-                  <div className="flex flex-col items-end gap-2">
-                    {/* 💸 Payment Toggle */}
-                    <span
-                      onClick={() => handlePaymentToggle(b.id, b.paymentStatus)}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer ${
-                        b.paymentStatus === "Paid"
-                          ? "bg-green-600 text-white"
-                          : "bg-red-600 text-white"
-                      }`}
-                    >
-                      {b.paymentStatus}
-                    </span>
+        <div className="flex flex-col items-end gap-2">
+          <span
+            onClick={() => handlePaymentToggle(b.id, b.paymentStatus)}
+            className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer ${
+              b.paymentStatus === "Paid"
+                ? "bg-green-600 text-white"
+                : "bg-red-600 text-white"
+            }`}
+          >
+            {b.paymentStatus}
+          </span>
+          <div className="flex gap-2 mt-2">
+            <Button variant="outline" size="sm" onClick={() => setSelected(b)}>View</Button>
+            <Button variant="destructive" size="sm" onClick={() => handleDelete(b.id)}>Delete</Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  ))
+) : (
+  <p className="text-gray-400 text-center">No bookings found or failed to load.</p>
+)}
 
-                    {/* Buttons */}
-                    <div className="flex gap-2 mt-2">
-                      <Button variant="outline" size="sm" onClick={() => setSelected(b)}>View</Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDelete(b.id)}>Delete</Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         )}
       </main>

@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ImageCarousel() {
   const images = [
-    "/udaipurwid.png",
-    "/jaislmer.png",
+    "/udaipurwid1.png",
+    "/jaislmer1.png",
     "/hawamahalwide.jpg",
     "/jalmahal.png",
     "/amerwid.png",

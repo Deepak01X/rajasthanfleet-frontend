@@ -18,7 +18,8 @@ import {
   Mail, MapPin, MapPinIcon, ChevronDown, Star, BookOpen,
   Compass, Utensils, CloudRain, User,
 } from "lucide-react"
-import { FaFacebookSquare, FaInstagram, FaWhatsappSquare } from "react-icons/fa";
+
+
 
 
 export default function WelcomeRajasthanPage() {
@@ -35,6 +36,35 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<any[]>([]);
   const [tips, setTips] = useState<any[]>([]);
     const router = useRouter(); // 🔹 Add this line just below useState hooks
+
+    useEffect(() => {
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.innerHTML = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Rajasthan Fleet",
+    url: "https://rajasthanfleet.com",
+    image: "https://rajasthanfleet.com/logo7.png",
+    telephone: "+91-9119373381",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Jaipur",
+      addressRegion: "Rajasthan",
+      addressCountry: "IN",
+    },
+    description:
+      "Rajasthan Fleet offers premium taxi, cab, and car rental services across Rajasthan including Jaipur, Udaipur, and Jodhpur.",
+    priceRange: "₹₹",
+    sameAs: [
+      "https://www.facebook.com/YourPageName",
+      "https://www.instagram.com/YourUsername",
+      "https://wa.me/9119373381",
+    ],
+  });
+  document.head.appendChild(script);
+}, []);
+
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/fleet`)
@@ -62,12 +92,13 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
     <div className="min-h-screen bg-background">
       {/* ---------------- Navbar ---------------- */}
       <nav className="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between">
           <div className="flex items-center space-x-3 text-2xl font-bold text-foreground">
   <img
     src="/logo7.png"  // 🔹 Apna logo public folder me daal, e.g. public/logo.png
-    alt="Rajasthan Fleet Logo"
-    className="w-90 h-20 rounded-full object-cover" // 🔹 Size & shape yahan se change kar sakta hai
+    alt="Rajasthan Fleet Taxi Logo"
+   className="w-24 h-16 sm:w-50 sm:h-20 rounded-full object-cover"
+ // 🔹 Size & shape yahan se change kar sakta hai
   />
   
 </div>
@@ -78,38 +109,50 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
             <a href="/about" className="text-muted-foreground hover:text-primary transition-colors">About</a>
             <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
           </div>
-          <div className="flex items-center space-x-4">
-  {/* 🔵 Facebook Original Icon */}
+        <div className="flex items-center space-x-4">
+  {/* Facebook (official svg) */}
   <a
-    href="https://www.facebook.com/YourPageName"
+    href="https://www.facebook.com/profile.php?id=61582597211874" // <-- apna FB link daal
     target="_blank"
     rel="noopener noreferrer"
     className="hover:scale-110 transition-transform"
   >
-    <FaFacebookSquare className="w-7 h-7 text-[#1877F2] hover:drop-shadow-[0_0_10px_rgba(24,119,242,0.8)]" />
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
+      alt="Facebook"
+      className="w-7 h-7"
+    />
   </a>
 
-  {/* 🟣 Instagram Original Icon */}
+  {/* Instagram (official png/svg) */}
   <a
-    href="https://www.instagram.com/YourUsername"
+    href="https://www.instagram.com/rajasthanfleet/" // <-- apna Insta link daal
     target="_blank"
     rel="noopener noreferrer"
     className="hover:scale-110 transition-transform"
   >
-    <FaInstagram className="w-7 h-7 text-[#E4405F] hover:drop-shadow-[0_0_10px_rgba(228,64,95,0.8)]" />
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+      alt="Instagram"
+      className="w-7 h-7 rounded-sm"
+    />
   </a>
 
-  {/* 💚 WhatsApp Original Icon */}
+  {/* WhatsApp (official svg) */}
   <a
-    href="https://wa.me/9119373381?text=Hello%20Rajasthan%20Fleet!%20I%20want%20to%20book%20a%20ride."
+    href="https://wa.me/919119373381?text=Hello%20Rajasthan%20Fleet%21%20I%20want%20to%20book%20a%20ride." // <-- apna number + message daal
     target="_blank"
     rel="noopener noreferrer"
     className="hover:scale-110 transition-transform"
   >
-    <FaWhatsappSquare className="w-7 h-7 text-[#25D366] hover:drop-shadow-[0_0_10px_rgba(37,211,102,0.8)]" />
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+      alt="WhatsApp"
+      className="w-7 h-7"
+    />
   </a>
 
-  {/* 🩷 Book Now Button */}
+  {/* Book Now Button */}
   <a href="/services">
     <Button className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-glow">
       Book Now
@@ -117,85 +160,136 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
   </a>
 </div>
 
+
         </div>
       </nav>
-
-      {/* ---------------- Hero ---------------- */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('/HomeTop1.png')` }}>
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div className="relative z-10 container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="flex justify-center lg:justify-start">
-            <div className="w-128 h-128 rounded-2xl overflow-hidden shadow-2xl"></div>
-          </div>
-          <div className="text-center lg:text-center animate-fade-in-up">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text drop-shadow-[2px_2px_6px_rgba(0,0,0,0.7)]">Your Ride Awaits!</h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white mb-8 drop-shadow-[1px_1px_4px_rgba(0,0,0,0.6)]">
-              Experience the royal journey across Rajasthan with premium comfort and unmatched service.
-            </p>
-           <a href="#book">
-  <Button
-    size="lg"
-    className="bg-primary text-white rounded-xl shadow-lg px-6 py-3 text-base md:px-8 md:py-4 md:text-lg hover:bg-primary/90 hover:scale-105 transition-transform hover:shadow-[0_0_40px_rgba(236,72,153,0.9)]"
+<section
+  id="home"
+  className="relative flex items-center justify-center overflow-hidden"
+  style={{
+    minHeight: "100dvh", // full viewport height for all devices
+    marginTop: "-5px",  // 🧹 remove the navbar black gap
+    paddingTop: "70px",  // ✅ push text below navbar so it doesn’t hide
+  }}
+>
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-no-repeat bg-center bg-cover bg-mobile-crop"
+    style={{
+      backgroundImage: "url('/HomeTop1.png')",
+     
+    }}
   >
-    Get A Quote
-  </Button>
-</a>
-          </div>
-        </div>
-      </section>
+    {/* Optional soft gradient instead of hard black overlay */}
+    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
+  </div>
+
+  {/* Text Container */}
+  <div className="relative z-10 container mx-auto px-4 sm:px-6 flex flex-col items-center justify-center text-center min-h-[70vh]">
+    <div className="max-w-[850px] w-full">
+      <h1
+        className="
+          text-[26px]
+          sm:text-[34px]
+          md:text-[42px]
+          lg:text-[50px]
+          font-extrabold
+          mb-6
+          leading-snug
+          gradient-text
+          drop-shadow-[2px_2px_6px_rgba(0,0,0,0.7)]
+          tracking-tight
+          text-center
+          px-2
+          break-words
+        "
+      >
+        Rajasthan Fleet – Reliable Taxi & Cab Booking Service in Rajasthan
+      </h1>
+
+      <p
+        className="
+          text-[15px]
+          sm:text-[17px]
+          md:text-[19px]
+          lg:text-[21px]
+          text-white
+          leading-relaxed
+          mb-8
+          max-w-[750px]
+          mx-auto
+          drop-shadow-[1px_1px_4px_rgba(0,0,0,0.6)]
+          px-3
+          text-center
+        "
+      >
+        Book premium taxis and tempo travellers for Jaipur, Udaipur, and Jodhpur. 
+        24×7 affordable cab service across Rajasthan.
+      </p>
+
+      <a href="#book">
+        <Button
+          size="lg"
+          className="
+            bg-[#ff2ea6]
+            hover:bg-[#ff168f]
+            text-white
+            font-semibold
+            text-base
+            rounded-xl
+            shadow-lg
+            px-6
+            py-3
+            hover:scale-105
+            transition-transform
+            hover:shadow-[0_0_30px_rgba(255,46,166,0.7)]
+          "
+        >
+          Get A Quote
+        </Button>
+      </a>
+    </div>
+  </div>
+</section>
 
 {/* ---------------- Service Promotional Slider (Dual Image Layout) ---------------- */}
-<section className="relative w-full h-[55vh] overflow-hidden rounded-2xl my-10">
+<section className="w-full px-0 relative overflow-hidden rounded-2xl my-2 md:my-10">
   <Swiper
     modules={[Autoplay, EffectFade]}
     effect="fade"
     autoplay={{ delay: 4000, disableOnInteraction: false }}
     loop={true}
-    className="h-full w-full"
+    className="w-full h-full min-h-[180px]"
   >
+
     {[
-      {
-        textImage: "/localtext.png", // Left side image with text design
-        mainImage: "/localadd.jpg", // Right side travel image
-      },
-      {
-        textImage: "/airporttext.png",
-        mainImage: "/airport.png",
-      },
-      {
-        textImage: "/corporatetext.png",
-        mainImage: "/corporate.jpg",
-      },
-      /*{
-        textImage: "/wedding-text.png",
-        mainImage: "/wedding-photo.jpg",
-      },*/
-      {
-        textImage: "/eventshutal.png",
-        mainImage: "/group.jpg",
-      },
+      { textImage: "/localtext.png", mainImage: "/localadd.jpg" },
+      { textImage: "/airporttext.png", mainImage: "/airport.png" },
+      { textImage: "/corporatetext.png", mainImage: "/corporate1.png" },
+      { textImage: "/eventshutal.png", mainImage: "/group.jpg" },
     ].map((s, i) => (
       <SwiperSlide key={i}>
-        <div className="relative h-[55vh] flex flex-row items-center justify-center">
-          {/* Left: Text Image */}
-          <div className="w-1/2 h-full flex items-center justify-center bg-black">
-            <img
-              src={s.textImage}
-              alt="Text Image"
-              className="w-[90%] h-[90%] object-contain rounded-xl"
-            />
+        <div className="w-full flex flex-row items-stretch justify-center md:h-[55vh]">
+          {/* Left block */}
+          <div className="w-1/2 flex flex-col items-center justify-center bg-black">
+            <div className="w-full aspect-[1/1] md:aspect-auto flex items-center justify-center md:h-full">
+              <img
+                src={s.textImage}
+                alt=""
+                className="w-full h-full object-contain rounded-xl md:h-[90%] md:max-w-[320px]"
+              />
+            </div>
           </div>
-
-          {/* Right: Main Image */}
-          <div className="w-1/2 h-full relative">
-            <img
-              src={s.mainImage}
-              alt="Main Image"
-              className="absolute inset-0 w-full h-full object-cover rounded-xl"
-            />
-            <div className="absolute inset-0 bg-gradient-to-l from-black/50 to-transparent rounded-xl"></div>
+          {/* Right block */}
+          <div className="w-1/2 flex flex-col items-center justify-center bg-black relative">
+            <div className="w-full aspect-[1/1] md:aspect-auto flex items-center justify-center md:h-full">
+              <img
+                src={s.mainImage}
+                alt=""
+                className="w-full h-full object-contain rounded-xl md:w-full md:h-full md:object-cover md:max-w-none"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-l from-black/50 to-transparent rounded-xl md:block hidden"></div>
           </div>
         </div>
       </SwiperSlide>
@@ -205,9 +299,12 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
 
 
 
+
+
       {/* ---------------- Carousel ---------------- */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+    <section className="py-4 md:py-20 bg-[#1a0f0f]">
+
+  <div className="container mx-auto px-4">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
             <ImageCarousel />
           </div>
@@ -552,26 +649,41 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
           </div>
         </div>
       </section>
+{/* ---------------- Hero Video Section (Fully Responsive, No Gaps) ---------------- */}
+<section className="video-section relative w-full h-[100svh] md:h-[90vh] overflow-hidden m-0 p-0">
+  {/* 🎥 Background Video */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-full h-full object-cover object-center"
+  >
+    <source src="/roadvideo.mp4" type="video/mp4" />
+  </video>
 
-      {/* ---------------- Video ---------------- */}
-      <section className="relative overflow-hidden h-screen">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-          <source src="/roadvideo.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center justify-center">
-          <div className="text-center text-white bg-black/40 backdrop-blur-sm p-8 rounded-2xl">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4">Rajasthan Calling?</h2>
-            <h3 className="text-3xl md:text-4xl font-semibold mb-6 text-primary">We Drive You</h3>
-            <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-8">Your adventure across Rajasthan starts with a click. Get moving with us!</p>
-            <a href="/booking">
-    <Button className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-glow">
-      Book Now
-    </Button>
-  </a>
-          </div>
-        </div>
-      </section>
+  {/* 🧊 Text Content - Centered with local blur behind text only */}
+  <div className="relative z-10 flex flex-col items-center justify-center text-center text-white h-full px-4">
+    <div className="bg-black/40 backdrop-blur-md p-6 sm:p-8 rounded-2xl max-w-[90%] sm:max-w-2xl">
+      <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 md:mb-4 drop-shadow-md">
+        Rajasthan Calling?
+      </h2>
+      <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 md:mb-6 text-primary drop-shadow-md">
+        We Drive You
+      </h3>
+      <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-8">
+        Your adventure across Rajasthan starts with a click. Get moving with us!
+      </p>
+      <a href="/booking">
+        <Button className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-glow">
+          Book Now
+        </Button>
+      </a>
+    </div>
+  </div>
+</section>
+
+
 
       {/* ---------------- Statistics ---------------- 
       <section className="py-20">
@@ -593,35 +705,49 @@ const [previewOpen, setPreviewOpen] = useState<number | null>(null);
 
       {/* ---------------- Services ---------------- */}
       <main><Services /></main>
+{/* ---------------- Our Guest is Our God ---------------- */}
+<section className="py-16 md:py-20 relative">
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: `url('/amergate.jpg')` }}
+  >
+    <div className="absolute inset-0 bg-black/70"></div>
+  </div>
 
-      {/* ---------------- Our Guest is Our God ---------------- */}
-      <section className="py-20 relative">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('/amergate.jpg')` }}>
-          <div className="absolute inset-0 bg-black/70"></div>
+  {/* Content */}
+  <div className="relative z-10 container mx-auto px-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center min-h-[400px] md:min-h-[500px]">
+      
+      {/* Text Section */}
+      <div className="text-center lg:text-left space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white">
+          Every Guest, Our God
+        </h2>
+        <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
+          In the land of kings and queens, we believe every traveler deserves royal treatment. 
+          As your trusted travel companion across Rajasthan, we don't just drive you from point A to B – 
+          we craft experiences that honor the majestic spirit of this incredible state.
+        </p>
+        <Button className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all">
+          Our Story
+        </Button>
+      </div>
+
+      {/* Image Section */}
+      <div className="flex justify-center lg:justify-end">
+        <div className="w-full max-w-[400px] md:max-w-[480px] lg:max-w-[500px] rounded-2xl overflow-hidden shadow-2xl">
+          <img
+            src="/rajasthan-royal-hospitality.jpg"
+            alt="Rajasthan Royal Hospitality and Taxi Service by Rajasthan Fleet"
+            className="w-full h-auto object-cover"
+          />
         </div>
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
-            <div className="text-center lg:text-left">
-              <h2 className="text-4xl font-bold mb-8">Every Guest, Our God</h2>
-              <div className="max-w-3xl">
-                <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                  In the land of kings and queens, we believe every traveler deserves royal treatment. As your trusted
-                  travel companion across Rajasthan, we don't just drive you from point A to B – we craft experiences
-                  that honor the majestic spirit of this incredible state.
-                </p>
-                <Button className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover-glow">
-                  Our Story
-                </Button>
-              </div>
-            </div>
-            <div className="flex flex-col items-center lg:items-end">
-              <div className="w-128 h-128 rounded-2xl overflow-hidden shadow-2xl">
-                <img src="/rajasthan-royal-hospitality.jpg" alt="Rajasthan Royal Hospitality" className="w-full h-full object-cover" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 {/* ---------------- Travel Tips Section ---------------- */}
 <section className="py-20 bg-card">
   <div className="container mx-auto px-4">

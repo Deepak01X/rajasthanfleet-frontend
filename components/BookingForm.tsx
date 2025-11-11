@@ -118,13 +118,15 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white shadow-xl p-10 rounded-2xl space-y-6">
+   <div className="w-full max-w-[98vw] sm:max-w-[95vw] md:max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-[clamp(1.2rem,3vw,2.8rem)] space-y-[clamp(1rem,2vw,1.5rem)] overflow-hidden">
+
       <h2 className="text-3xl font-bold text-center text-pink-600 mb-6">
         Book Your Cab 🚖
       </h2>
 
       {/* Tabs */}
-      <div className="flex justify-center space-x-6 mb-6">
+    <div className="flex flex-wrap justify-center gap-[clamp(0.5rem,2vw,1.5rem)] mb-[clamp(0.5rem,2vw,1rem)] text-[clamp(0.85rem,2.5vw,1rem)]">
+
         {["general", "corporate", "wedding"].map((tab) => (
           <button
             key={tab}
@@ -146,7 +148,8 @@ export default function BookingForm() {
             {/* Car Info */}
             <div className="border rounded p-4 bg-gray-50">
               <h3 className="text-lg font-semibold mb-2">Selected Car Details 🚘</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 auto-rows-fr gap-[clamp(0.75rem,2vw,1.5rem)]
+ gap-4">
                 <input
                   type="text"
                   name="cabType"
@@ -189,7 +192,8 @@ export default function BookingForm() {
             </div>
 
             {/* Passenger Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 auto-rows-fr gap-[clamp(0.75rem,2vw,1.5rem)]
+ gap-6">
               <div>
                 <label className="block font-semibold">Adults</label>
                 <div className="flex items-center border rounded p-3">
@@ -330,7 +334,8 @@ export default function BookingForm() {
 ))}
 
         {/* Date, Time, Notes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 auto-rows-fr gap-[clamp(0.75rem,2vw,1.5rem)]
+ gap-6">
           <div>
             <label className="block font-semibold">Date</label>
             <div className="flex items-center border rounded p-3">

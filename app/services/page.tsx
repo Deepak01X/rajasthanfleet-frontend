@@ -14,7 +14,7 @@ export default function ServicesPage() {
     const fetchServices = async () => {
       try {
         // ✅ Fetch data from Spring Boot backend
-         const res = await fetch(`${API_BASE_URL}/api/services`, {
+        const res = await fetch(`${API_BASE_URL}/api/services`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -31,7 +31,6 @@ export default function ServicesPage() {
         // 🧩 Group data into frontend-friendly structure
         const grouped = data.reduce((acc: any, item: any) => {
           const { category, carName, image, price } = item;
-          // ✅ Handle multiple naming styles safely
           const serviceType =
             item.serviceType || item.service_type || item.servicetype || item.type;
 
@@ -45,7 +44,6 @@ export default function ServicesPage() {
             };
           }
 
-          // ✅ Push data safely
           acc[category][carName].services.push({
             type: serviceType || "Service",
             price,
@@ -54,7 +52,6 @@ export default function ServicesPage() {
           return acc;
         }, {});
 
-        // ✅ Convert grouped object into array format
         const formatted = Object.entries(grouped).map(([category, cars]) => ({
           category,
           subcategories: Object.values(cars),
@@ -80,27 +77,29 @@ export default function ServicesPage() {
   }
 
   return (
-    <div className="p-12 bg-[#1e1313] min-h-screen text-white">
-      {/* 🔹 Header */}
+    <>
+      {/* 🔹 Fixed Navbar (moved outside main padded div) */}
       <Header />
 
-      {/* 🔹 Dynamic service sections */}
-      {services.length > 0 ? (
-        services.map((item, i) => (
-          <ServiceSection
-            key={i}
-            category={item.category}
-            subcategories={item.subcategories}
-          />
-        ))
-      ) : (
-        <p className="text-center text-gray-400">
-          No services found. Please try again later.
-        </p>
-      )}
+      {/* 🔹 Main Content */}
+      <div className="bg-[#1e1313] min-h-screen text-white pt-[90px] px-12">
+        {services.length > 0 ? (
+          services.map((item, i) => (
+            <ServiceSection
+              key={i}
+              category={item.category}
+              subcategories={item.subcategories}
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-400">
+            No services found. Please try again later.
+          </p>
+        )}
 
-      {/* 🔹 Footer */}
-      <Footer />
-    </div>
+        {/* 🔹 Footer */}
+        <Footer />
+      </div>
+    </>
   );
 }
